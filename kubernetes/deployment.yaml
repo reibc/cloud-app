@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ac-laboratory-v1
-        image: us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/cloud-app:latest
+        image: us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image:latest
         ports:
         - containerPort: 8080
   strategy:
