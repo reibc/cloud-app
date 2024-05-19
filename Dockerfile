@@ -1,5 +1,7 @@
 FROM openjdk:17
 
+WORKDIR /cloud-app
+
 COPY build build
 COPY src src
 
