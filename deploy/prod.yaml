@@ -1,0 +1,9 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: prod
+  annotations: {}
+  labels: {}
+description: prod
+gke:
+  cluster: projects/ac-m-laborator-clean/locations/us-central1-a/clusters/cluster-1
