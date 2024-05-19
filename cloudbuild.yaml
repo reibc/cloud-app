@@ -3,13 +3,9 @@ steps:
   args: ['build', '-t', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image', '.' ]
   id: 'Build Docker Image'
 
-  # images:
-  # - 'us-central1-docker.pkg.dev/<your_project_id>/gke-repo/quickstart-image'
-
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image' ]
   id: 'Push Docker Image'
-
 
 - name: 'google/cloud-sdk:latest'
   entrypoint: 'sh'
@@ -19,8 +15,7 @@ steps:
   - |
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
     gcloud deploy apply --file deploy/prod.yaml --region=us-central1
-    gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=ac-cicd --region=us-central1 --from-k8s-manifest=kubernets/deployment.yaml
-
+    gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=ac-cicd --region=us-central1 --from-k8s-manifest=kubernetes/deployment.yaml
 
 options:
   logging: CLOUD_LOGGING_ONLY
