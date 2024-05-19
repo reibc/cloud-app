@@ -19,7 +19,7 @@ steps:
   - |
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
     gcloud deploy apply --file deploy/prod.yaml --region=us-central1
-    gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=ac-cicd-pipeline --region=us-central1 --from-k8s-manifest=_kube/deployment.yaml
+    gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=ac-cicd --region=us-central1 --from-k8s-manifest=_kube/deployment.yaml
 
 
 options:
