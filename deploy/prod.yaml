@@ -6,4 +6,4 @@ metadata:
   labels: {}
 description: prod
 gke:
-  cluster: projects/ac-cloud-app/locations/us-central1/clusters/cluster-1
+  cluster: projects/ac-cloud-app/locations/us-central1-a/clusters/cluster-1
