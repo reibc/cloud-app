@@ -18,6 +18,13 @@ spec:
         image: us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image:latest
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
   strategy:
     type: RollingUpdate
     rollingUpdate:
