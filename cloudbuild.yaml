@@ -1,32 +1,21 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image:$SHORT_SHA', '.' ]
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image', '.' ]
   id: 'Build Docker Image'
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image:$SHORT_SHA' ]
+  args: ['push', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image' ]
   id: 'Push Docker Image'
 
 - name: 'google/cloud-sdk:latest'
   entrypoint: 'sh'
   args:
+  - -xe
   - -c
   - |
-    # Configure kubectl context
-    gcloud container clusters get-credentials cluster-1 --zone us-central1-a --project natural-potion-423808-h2
-
-    # Set deployment annotations for change cause
-    kubectl annotate deployment cloud-app-deployment-v1 kubernetes.io/change-cause="Deployed commit ${SHORT_SHA}" --overwrite
-
-    # Apply deployment configurations
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
     gcloud deploy apply --file deploy/prod.yaml --region=us-central1
-
-    # Create a new release in Google Cloud Deploy
     gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=ac-cicd --region=us-central1 --from-k8s-manifest=kubernetes/deployment.yaml
-
-    # Optionally, resize the cluster to ensure capacity
-    gcloud container clusters resize cluster-1 --node-pool default-pool --num-nodes=5 --zone us-central1
 
 options:
   logging: CLOUD_LOGGING_ONLY
