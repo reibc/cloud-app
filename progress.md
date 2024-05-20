@@ -29,12 +29,13 @@
         - Rollback: `kubectl rollout undo deployment <deployment-name> --to-revision=<revision-number>`
         - Simple rollback: `kubectl rollout undo deployment <deployment-name>`
 
-10. **Kubernetes cluster should be able to autoscale the application based on the load**
+9. **Kubernetes cluster should be able to monitor the application**
+    - Kubernetes natively supports system usage monitoring
+
+11. **Kubernetes cluster should be able to autoscale the application based on the load**
     - Kubernetes cluster autoscales using HPA (Horizontal Pod Autoscaler):
         - `minReplicas` - The minimum number of pod replicas to maintain.
         - `maxReplicas` - The maximum number of pod replicas to maintain.
         - `targetCPUUtilizationPercentage` - The target average CPU utilization across all pods.
 
-## Unfinished
 
-9. **Kubernetes cluster should be able to monitor the application**
