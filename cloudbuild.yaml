@@ -1,10 +1,10 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image', '.' ]
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image:$SHORT_SHA', '.' ]
   id: 'Build Docker Image'
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image' ]
+  args: ['push', 'us-central1-docker.pkg.dev/natural-potion-423808-h2/repo/quickstart-image:$SHORT_SHA' ]
   id: 'Push Docker Image'
 
 - name: 'google/cloud-sdk:latest'
@@ -13,8 +13,14 @@ steps:
   - -xe
   - -c
   - |
+    # Set deployment annotations for change cause
+    kubectl annotate deployment cloud-app-deployment-v1 kubernetes.io/change-cause="Deployed commit ${SHORT_SHA}" --overwrite
+
+    # Apply deployment configurations
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
     gcloud deploy apply --file deploy/prod.yaml --region=us-central1
+
+    # Create a new release in Google Cloud Deploy
     gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=ac-cicd --region=us-central1 --from-k8s-manifest=kubernetes/deployment.yaml
 
 options:
