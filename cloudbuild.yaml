@@ -13,7 +13,7 @@ steps:
   - -c
   - |
     # Configure kubectl context
-    gcloud container clusters get-credentials cluster-1 --zone us-central1 --project natural-potion-423808-h2
+    gcloud container clusters get-credentials cluster-1 --zone us-central1-a --project natural-potion-423808-h2
 
     # Set deployment annotations for change cause
     kubectl annotate deployment cloud-app-deployment-v1 kubernetes.io/change-cause="Deployed commit ${SHORT_SHA}" --overwrite
