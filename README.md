@@ -1,3 +1,8 @@
+```
+THIS IS AN UNIVERSITY PROJECT 
+The purpose of this project was to deploy the application to Google Cloud
+```
+
 # Getting Started
 
 ### Running the Application
